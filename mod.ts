@@ -1,7 +1,7 @@
-type Err<E> = { error: E; value?: never };
-type Ok<T> = { error?: never; value: T };
+type Err<E> = { error: Readonly<E>; value?: never };
+type Ok<T> = { error?: never; value: Readonly<T> };
 
-export type Result<T, E> = NonNullable<Ok<T> | Err<E>>;
+export type Result<T, E> = Ok<T> | Err<E>;
 
 export const isErr = <T, E>(result: Result<T, E>): result is Err<E> =>
   result.error !== undefined;
