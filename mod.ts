@@ -11,6 +11,20 @@ export const isOk = <T, E>(result: Result<T, E>): result is Ok<T> =>
 export const newErr = <E>(error: E): Err<E> => ({ error });
 export const newOk = <T>(value: T): Ok<T> => ({ value });
 
+/*
+  unwrap functions are for testing purposes only and should not be used in
+  production code.
+*/
+export const unwrapErr = <T, E>(result: Result<T, E>): E => {
+  if (isErr(result)) return result.error;
+  throw new Error("unwrapErr: result is not an error");
+};
+
+export const unwrapOk = <T, E>(result: Result<T, E>): T => {
+  if (isOk(result)) return result.value;
+  throw new Error("unwrapOk: result is not a value");
+};
+
 export const mapResult = <T, E, V>(
   result: Result<T, E>,
   okHandler: (value: T) => V,
